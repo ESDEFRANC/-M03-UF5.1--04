@@ -31,69 +31,82 @@ public class M03UF5104 {
      * @param args the command line arguments
      */
     public static void main(String[] args) throws FileNotFoundException, ParseException, IOException {
-        
+
         // TODO code application logic here
-         FileReader fr = new FileReader ("videoteca.dat");
+        FileReader fr = new FileReader("videoteca.dat");
         BufferedReader br = new BufferedReader(fr);
-        ArrayList<Peliculas>  peliculas = new ArrayList<>();
+        ArrayList<Peliculas> peliculas = new ArrayList<>();
         BufferedReader vr = new BufferedReader(new InputStreamReader(System.in));
-        int menu=0;
+        int menu = 0;
         String cadena;
-            while(menu!=4){ 
+        while (menu != 4) {
             System.out.println("1. Cargar datos de inicio");
             System.out.println("2. Listar peliculas ordenadas por n de votos");
             System.out.println("3. Listar peliculas ordenadas por genero");
-            System.out.println("4. Salir");   
+            System.out.println("4. Salir");
             cadena = vr.readLine();
             menu = Integer.parseInt(cadena);
-            
-            switch(menu){
-              
+
+            switch (menu) {
+
                 case 1:
                     System.out.println("1. Cargar datos de inicio");
-                    leerDocumento(br,peliculas);
+                    leerDocumento(br, peliculas);
                     break;
                 case 2:
                     System.out.println("2. Listar peliculas ordenadas por n de votos");
-                   Collections.sort(peliculas);
-                    for (Peliculas pel: peliculas) {
-                        System.out.println("Titulo: " + pel.getTitulo()+ ", numero votos: " + pel.getVotos());
-                    }
+                    ordenarVotos(peliculas);
                     break;
-                }
-                    
+                case 3:
+                    System.out.println("3. Listar peliculas ordenadas por genero");
+                    ordenarTitulo(peliculas);
+                    break;
+                case 4:
+                    System.out.println("Adios");
+                    break;
             }
-            
+
         }
 
-        
-        
-        
+    }
 
-    
-    
     public static ArrayList<Peliculas> leerDocumento(BufferedReader br, ArrayList<Peliculas> peliculas) throws ParseException, IOException {
-       String cadena=null;
-       
-       while((cadena = br.readLine())!= null){
-       String[] parts = cadena.split("/");
-         Peliculas p = createPelicula(parts);
-         peliculas.add(p);
-                System.out.println("Peliculas cargadas con exito");
-         
-       }
-       
+        String cadena = null;
+
+        while ((cadena = br.readLine()) != null) {
+            String[] parts = cadena.split("/");
+            Peliculas p = createPelicula(parts);
+            peliculas.add(p);
+            System.out.println("Peliculas cargadas con exito");
+
+        }
+
         return peliculas;
     }
-    private static Peliculas createPelicula(String[] data) throws ParseException{
+
+    private static Peliculas createPelicula(String[] data) throws ParseException {
         int num;
-        
+
         num = Integer.parseInt(data[2]);
 
-       return new Peliculas(data[0],data[1],num);
-       
+        return new Peliculas(data[0], data[1], num);
+
     }
-    
-         
-    
+    public static ArrayList<Peliculas> ordenarVotos(ArrayList<Peliculas> peliculas){
+        
+        Collections.sort(peliculas);
+                    for (Peliculas pel : peliculas) {
+                        System.out.println("Titulo: " + pel.getTitulo() + ", numero votos: " + pel.getVotos());
+                    }
+                    return peliculas;
+    }
+      public static ArrayList<Peliculas> ordenarTitulo(ArrayList<Peliculas> peliculas){
+        
+        Collections.sort(peliculas, (Peliculas obj1, Peliculas obj2) -> obj1.getTitulo().compareTo(obj2.getTitulo()));
+                    for (Peliculas pel : peliculas) {
+                        System.out.println("Titulo: " + pel.getTitulo() + ", numero votos: " + pel.getVotos());
+                    }
+                    return peliculas;
+    }
+
 }
