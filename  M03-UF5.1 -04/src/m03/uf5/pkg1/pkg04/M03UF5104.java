@@ -20,6 +20,7 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.PriorityQueue;
 import java.util.Queue;
+import m03.uf5.pkg1.pkg04.Peliculas.Genero;
 
 /**
  *
@@ -59,7 +60,7 @@ public class M03UF5104 {
                     break;
                 case 3:
                     System.out.println("3. Listar peliculas ordenadas por genero");
-                    ordenarTitulo(peliculas);
+                    ordenar4(peliculas);
                     break;
                 case 4:
                     System.out.println("Adios");
@@ -77,9 +78,10 @@ public class M03UF5104 {
             String[] parts = cadena.split("/");
             Peliculas p = createPelicula(parts);
             peliculas.add(p);
-            System.out.println("Peliculas cargadas con exito");
+           
 
         }
+         System.out.println("Peliculas cargadas con exito");
 
         return peliculas;
     }
@@ -88,9 +90,29 @@ public class M03UF5104 {
         int num;
 
         num = Integer.parseInt(data[2]);
+        Genero a = getGeneros(data[1]);
+        return new Peliculas(data[0], a, num);
 
-        return new Peliculas(data[0], data[1], num);
-
+    }
+    public static Genero getGeneros(String genero){
+        Genero gen = null;
+        if(genero.equals("aventura")){
+              gen = Genero.AVENTURA;
+             return gen;
+         } else if(genero.equals("terror")){
+              gen = Genero.TERROR;
+             return gen;
+         }else if(genero.equals("cienciaficcion")){
+              gen = Genero.CIENCIAFICCION;
+             return gen;
+         }else if(genero.equals("infantil")){
+              gen = Genero.INFANTIL;
+             return gen;
+    }
+        
+         return gen;
+        
+        
     }
     public static ArrayList<Peliculas> ordenarVotos(ArrayList<Peliculas> peliculas){
         
@@ -100,13 +122,25 @@ public class M03UF5104 {
                     }
                     return peliculas;
     }
-      public static ArrayList<Peliculas> ordenarTitulo(ArrayList<Peliculas> peliculas){
+      public static ArrayList<Peliculas> ordenar4(ArrayList<Peliculas> peliculas){
         
-        Collections.sort(peliculas, (Peliculas obj1, Peliculas obj2) -> obj1.getTitulo().compareTo(obj2.getTitulo()));
+        Collections.sort(peliculas, new Comparator<Peliculas>() {
+            @Override
+            public int compare(Peliculas obj1, Peliculas obj2) {
+
+                 int num = obj1.getGenero().compareTo(obj2.getGenero());
+                 
+                 return num;
+                
+            }
+        });
+                      
+        
                     for (Peliculas pel : peliculas) {
-                        System.out.println("Titulo: " + pel.getTitulo() + ", numero votos: " + pel.getVotos());
+                        System.out.println("Genero: " + pel.getGenero()+ " Nombre peli: " +pel.getTitulo()+ ", numero votos: " + pel.getVotos());
                     }
                     return peliculas;
     }
+      
 
 }

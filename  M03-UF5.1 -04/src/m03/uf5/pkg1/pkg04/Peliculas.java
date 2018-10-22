@@ -13,14 +13,19 @@ import java.util.Collections;
  * @author usuario
  */
 public class Peliculas implements Comparable<Peliculas>{
+    public enum  Genero{AVENTURA,CIENCIAFICCION,TERROR, INFANTIL};
     private String titulo;
-    private String genero;
     private int votos;
+    private Genero genero;
 
-    public Peliculas(String titulo, String genero, int votos) {
+    public Peliculas(){
+        
+    }
+
+    public Peliculas(String titulo, Genero genero, int votos) {
         this.titulo = titulo;
-        this.genero = genero;
         this.votos = votos;
+        this.genero=genero;
     }
 
     public String getTitulo() {
@@ -31,12 +36,13 @@ public class Peliculas implements Comparable<Peliculas>{
         this.titulo = titulo;
     }
 
-    public String getGenero() {
+    public Genero getGenero() {
         return genero;
     }
 
-    public void setGenero(String genero) {
+    public Genero setGenero(Genero genero) {
         this.genero = genero;
+        return genero;
     }
 
     public int getVotos() {
